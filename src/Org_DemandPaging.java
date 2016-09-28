@@ -32,8 +32,8 @@ etc, etc, etc...
 
 public static void main(String[] args) { 
 int programSize = 460; 
-int memorySize = 400; 
-int pageSize = 200; 
+int memorySize = 200; 
+int pageSize = 100; 
 int pageFrameSize = (int) Math.ceil((double) programSize / pageSize); 
 int counter = 0 ; 
 

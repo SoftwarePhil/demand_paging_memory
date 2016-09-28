@@ -1,28 +1,45 @@
 
 public class Memory {
 
-private int programSize = 460; 
-private int memorySize = 400; 
-private int pageSize = 200; 
+private int memorySize; 
+private int pageSize; 
+private int missCount = 0;
 private int[] requests;
 private int[] cache;
 
-public Memory(int programSize, int memorySize, int pageSize, int[] requests){
-	this.programSize = programSize;
+public Memory(int memorySize, int pageSize, int[] requests){
 	this.memorySize = memorySize;
 	this.pageSize = pageSize;
-	
-	cache = new int[memorySize/pageSize];
-}
-
-public void runProgram(int[] requests){
 	this.requests = requests;
 	
-	
-
+	cache = new int[this.memorySize/this.pageSize];
 }
 
-public int findPage(int currentWord){
+public void runProgram(){
+	int currentPage;
+	for(int word : requests){
+		currentPage = findPage(word);
+		
+		boolean hit = false;
+		for(int page : cache){
+			if(page == currentPage){
+				System.out.println("Hit! :: page " + page + ":: word " + word);
+				hit = true;
+				break;
+			}
+		}
+		
+		if(hit == false){
+			System.out.println("Miss ..  word "+ word +":: page "+ currentPage  +" swapping .. ..");
+			swap(currentPage);
+			missCount++;
+		}
+	}
+	
+	System.out.println("\nThis program missed " + missCount + " times");
+}
+
+private int findPage(int currentWord){
 	int page = 0; 
 	
 	if(currentWord < pageSize){ 
@@ -35,13 +52,22 @@ public int findPage(int currentWord){
 	return page; 
 }
 
-public void swap(int currentPage){ 
-	System.out.println ("Loading page #" + currentPage + ". Unloading page #" + cache[0]); 
+private void swap(int currentPage){ 
+	System.out.print("\t Loading page " + currentPage + ":: Unloading page " + cache[0]); 
+	
 	
 	for(int x = 0; x < cache.length - 1; x++){ 
-		cache[x + 1] = cache[x]; 
+		cache[x] = cache[x + 1]; 
 	} 
 	
-	cache[0] = currentPage;  
+	cache[cache.length - 1] = currentPage; 
+	
+	System.out.print(" current cache is ");
+
+	for(int c : cache){
+		System.out.print(c + " ");
+	}
+
+	System.out.println();
 } 
 }

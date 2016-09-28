@@ -34,7 +34,7 @@ static int[] cache;
 
 public static void main(String[] args){ 
 int programSize = 460; 
-int memorySize = 400; 
+int memorySize = 200; 
 int pageSize = 200; 
 int pageFrameSize = (int) Math.ceil((double) programSize / pageSize); 
 int counter = 0 ; 
@@ -59,8 +59,7 @@ wordRequest[10] = 458;
 wordRequest[11] = 364; 
 */
 
-int[] wordRequest = {10
-		, 11, 104, 170, 73, 309, 185, 245, 246, 434, 458, 364};
+int[] wordRequest = {10, 11, 104, 170, 73, 309, 185, 245, 246, 434, 458, 364};
 
 
 for(int i = 0 ; i < wordRequest.length; i++){ 
