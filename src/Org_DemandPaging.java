@@ -1,4 +1,4 @@
-public class DemandPaging { 
+public class Org_DemandPaging { 
 
 /** 
 This problem studies the effect of changing page sizes in a demand paging system. 
@@ -28,11 +28,9 @@ So, for your example numbers:
 185. This is page #2. This isn't in the Cache any more so load it and store it into the Cache. At this point, the Cache would store three items and can only store two, so drop the bottom one (Page #1) out of the cache. 
 etc, etc, etc... 
 */ 
-static int[] cache;
 
 
-
-public static void main(String[] args){ 
+public static void main(String[] args) { 
 int programSize = 460; 
 int memorySize = 400; 
 int pageSize = 200; 
@@ -41,8 +39,8 @@ int counter = 0 ;
 
 int currentPage = 0; 
 
-cache = new int[memorySize/pageSize]; 
-/*
+int[] cache = new int[memorySize/pageSize]; 
+
 int[] wordRequest = new int[12]; 
 
 wordRequest[0] = 10; 
@@ -57,64 +55,53 @@ wordRequest[8] = 246;
 wordRequest[9] = 434; 
 wordRequest[10] = 458; 
 wordRequest[11] = 364; 
-*/
-
-int[] wordRequest = {10
-		, 11, 104, 170, 73, 309, 185, 245, 246, 434, 458, 364};
 
 
-for(int i = 0 ; i < wordRequest.length; i++){ 
-	currentPage = whichPage(wordRequest[i], pageSize); 
-	System.out.println(wordRequest[i] + " is page #" + currentPage); 
-	
-	for(int r : cache){
-		System.out.print(r + " ");
-	}
-	System.out.println();
-	int p;
-	
-	for(p =0; p < cache.length; p++){ 
-		if( cache[p] == currentPage){ 
-			// Cache hit 
-			System.out.println(wordRequest[i] + " Hit"); 
-			break; 
-		} 	
-	} 
-	
-	if (p == cache.length) { 
-		// Cache miss 
-		System.out.println (wordRequest[i] + " Miss."); 
-		swap(currentPage); 
-		counter++; 
-	} 
+for ( int i = 0 ; i < wordRequest.length; i++){ 
+currentPage = whichPage(wordRequest[i], pageSize); 
+System.out.println (wordRequest[i] + " is page #" + currentPage); 
+//System.out.println(currentPage); 
+
+int p; 
+for(p =0; p < cache.length; p++){ 
+if( cache[p] == currentPage){ 
+// Cache hit 
+System.out.println (wordRequest[i] + " Hit."); 
+break; 
 } 
 
-System.out.println(counter + " misses"); 
 } 
 
-
-public static void swap(int currentPage){ 
-	System.out.println ("Loading page #" + currentPage + ". Unloading page #" + cache[0] + "."); 
-	
-	for(int x = 0; x < cache.length - 1; x++){ 
-		cache[x + 1] = cache[x]; 
-	} 
-	
-	cache[0] = currentPage; 
-	//System.out.println(cache.length); 
+if (p == cache.length) { 
+// Cache miss 
+System.out.println (wordRequest[i] + " Miss."); 
+swap(cache , currentPage); 
+counter++; 
+} 
+} 
+System.out.println(counter + " misses."); 
 } 
 
+public static void swap(int[] cache , int currentPage){ 
+System.out.println ("Loading page #" + currentPage + ". Unloading page #" + cache[0] + "."); 
+
+for(int x =0 ; x > cache.length - 1; x++){ 
+cache[x] = cache[x + 1]; 
+} 
+cache[cache.length -1 ] = currentPage; 
+//System.out.println(cache.length); 
+} 
 public static int whichPage(int word, int pageSize){ 
-	int page = 0; 
-	
-	if( word < pageSize){ 
-		page = 0; 
-	} 
-	else if( word > pageSize){ 
-		page = Math.round(word/(float)pageSize); 
-	} 
-	
-	return page; 
+int page = 0; 
+
+if ( word < pageSize){ 
+page = 0; 
+} else if ( word > pageSize){ 
+page = (int) Math.ceil((double) word/pageSize); 
 } 
+
+return page; 
+} 
+
 
 } 
