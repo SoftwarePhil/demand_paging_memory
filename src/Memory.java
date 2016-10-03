@@ -23,17 +23,20 @@ public void runProgram(){
 		boolean hit = false;
 		for(int page : cache){
 			if(page == currentPage){
-				System.out.println("Hit! :: page " + page + ":: word " + word);
+				System.out.println("Hit  :: page " + page + ":: word " + word);
 				hit = true;
 				break;
 			}
 		}
 		
 		if(hit == false){
-			System.out.println("Miss ..  word "+ word +":: page "+ currentPage  +" swapping .. ..");
+			System.out.println("Miss .. word "+ word +":: page "+ currentPage  +" swapping .. ..");
 			swap(currentPage);
 			missCount++;
 		}
+		
+		printMemory();
+		System.out.print("\n");
 	}
 	
 	System.out.println("\nThis program missed " + missCount + " times");
@@ -53,7 +56,7 @@ private int findPage(int currentWord){
 }
 
 private void swap(int currentPage){ 
-	System.out.print("\t Loading page " + currentPage + ":: Unloading page " + cache[0]); 
+	System.out.print("\tLoading page " + currentPage + " :: Unloading page " + cache[0]); 
 	
 	
 	for(int x = 0; x < cache.length - 1; x++){ 
@@ -61,13 +64,17 @@ private void swap(int currentPage){
 	} 
 	
 	cache[cache.length - 1] = currentPage; 
-	
-	System.out.print(" current cache is ");
+	System.out.println();
+}
+
+private void printMemory(){
+	System.out.print("\tcurrent memory is ");
 
 	for(int c : cache){
 		System.out.print(c + " ");
 	}
-
+	
 	System.out.println();
-} 
+}
+
 }
