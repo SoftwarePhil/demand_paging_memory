@@ -13,6 +13,10 @@ public Memory(int memorySize, int pageSize, int[] requests){
 	this.requests = requests;
 	
 	cache = new int[this.memorySize/this.pageSize];
+	
+	for(int i = 0; i < cache.length; i++){
+		cache[i] = -1;
+	}
 }
 
 public void runProgram(){
@@ -39,7 +43,8 @@ public void runProgram(){
 		System.out.print("\n");
 	}
 	
-	System.out.println("\nThis program missed " + missCount + " times");
+	System.out.println("\nThis program missed " + missCount + " times out of " + requests.length);
+	System.out.print("There was a swap rate of  " + (100 * (missCount/(double)requests.length)));
 }
 
 private int findPage(int currentWord){
